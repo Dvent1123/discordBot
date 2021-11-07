@@ -33,6 +33,8 @@ client.on('messageCreate' , message => {
 
     if(command === 'ping'){
         client.commands.get('ping').execute(message, args)
+    }else if(command === 'poll'){
+        client.commands.get('poll').execute(client, message, args)
     }
 })
 
