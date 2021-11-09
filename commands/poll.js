@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = {
@@ -19,14 +20,36 @@ module.exports = {
 
         }
 
-        const embedPoll = new MessageEmbed()
-        .setTitle('New poll')
-        .setDescription(`${question}`)
-        .setFooter(`${message.author.username} created this poll.`)
-            
-        let msg = await client.channels.cache.get(channel.id).send({embeds: [embedPoll]})
-        await msg.react('👍')
-        await msg.react('👎')
-
+        const MAX_REACTIONS = 0;
+      
+          try {
+            // send a message and wait for it to be sent
+            const sentMessage = await message.channel.send('React to this!');
+      
+            // react to the sent message
+            await sentMessage.react('👍');
+      
+            // set up a filter to only collect reactions with the 👍 emoji
+            // and don't count the bot's reaction
+            const filter = (reaction, user) => reaction.emoji.name === '👍' && !user.bot;
+      
+            // set up the collecrtor with the MAX_REACTIONS
+            const collector = sentMessage.createReactionCollector({ filter, time: 15000 });
+      
+            collector.on('collect', (reaction) => {
+              // in case you want to do something when someone reacts with 👍
+              console.log(`Collected a new ${reaction.emoji.name} reaction`);
+            });
+      
+            // fires when the time limit or the max is reached
+            collector.on('end', (collected) => {
+              // reactions are no longer collected
+              // if the 👍 emoji is clicked the MAX_REACTIONS times
+                return message.channel.send(`We got this many reations: ${collected.size}`);
+            });
+          } catch (error) {
+            // "handle" errors
+            console.log(error);
+          }
     }
 }
