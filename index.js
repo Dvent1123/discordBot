@@ -35,7 +35,8 @@ client.on('messageCreate' , message => {
         client.commands.get('ping').execute(message, args)
     }else if(command === 'poll'){
         client.commands.get('poll').execute(client, message, args)
-    }
+    }else if(command === 'majority')
+        client.commands.get('majority').execute(message, args)
 })
 
 
