@@ -5,8 +5,8 @@ module.exports = {
     name: 'poll',
     description: 'Creates a poll',
     execute: async (client, message, args) => {
-        if(!message.member.permissions.has('ADMINISTRATOR'))
-        return message.channel.send('You do not have ')
+        if (!message.member.permissions.has('ADMINISTRATOR'))
+            return message.channel.send('You do not have Admin permission')
 
         const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
         if(!channel){
@@ -17,21 +17,22 @@ module.exports = {
 
         if(!question) {
             return message.channel.send('You did not specify a question for your poll')
-
         }
 
         const MAX_REACTIONS = 0;
       
           try {
             // send a message and wait for it to be sent
-            const sentMessage = await message.channel.send('React to this!');
-      
+            const sentMessage = await message.channel.send('New poll:\n' + question);
+
+            const valid_reactions = ['👍', '👎'];
+
             // react to the sent message
-            await sentMessage.react('👍');
-      
-            // set up a filter to only collect reactions with the 👍 emoji
+            valid_reactions.forEach(element => sentMessage.react(element));
+
+            // set up a filter to only collect reactions from the array of valid reactions
             // and don't count the bot's reaction
-            const filter = (reaction, user) => reaction.emoji.name === '👍' && !user.bot;
+            const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot;
       
             // set up the collecrtor with the MAX_REACTIONS
             const collector = sentMessage.createReactionCollector({ filter, time: 15000 });

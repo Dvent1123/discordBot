@@ -38,15 +38,16 @@ module.exports = {
         // CREATE THE QUESTION AND SEND TO DISCORD GUILD
             try {
             // send a message and wait for it to be sent
-            const sentMessage = await message.channel.send('React to this, win by majority vote!');
+            const sentMessage = await message.channel.send('New poll:\n' + question);
 
-      
+            const valid_reactions = ['👍', '👎'];
+
             // react to the sent message
-            await sentMessage.react('👍');
-      
-            // set up a filter to only collect reactions with the 👍 emoji
+            valid_reactions.forEach(element => sentMessage.react(element));
+
+            // set up a filter to only collect reactions from the array of valid reactions
             // and don't count the bot's reaction
-            const filter = (reaction, user) => reaction.emoji.name === '👍' && !user.bot;
+            const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot;
       
             // set up the collecrtor with the MAX_REACTIONS
             const collector = sentMessage.createReactionCollector({ filter, time: 60000, max: MAJORITY });
