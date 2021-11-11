@@ -33,12 +33,13 @@ module.exports = {
         // // RETURN OR CREATE THE NUMBER OF PEOPLE THAT MAKES MAJORITY
         
         const MAJORITY = Math.floor(totalRoleMembers * (percentage / 100))
-        
+        //Don't have to know when they take away the reaction, just update the time when they react again
         
         // CREATE THE QUESTION AND SEND TO DISCORD GUILD
             try {
             // send a message and wait for it to be sent
             const sentMessage = await message.channel.send('React to this, win by majority vote!');
+
       
             // react to the sent message
             await sentMessage.react('👍');
@@ -50,20 +51,17 @@ module.exports = {
             // set up the collecrtor with the MAX_REACTIONS
             const collector = sentMessage.createReactionCollector({ filter, time: 60000, max: MAJORITY });
       
-            collector.on('collect', (reaction) => {
-              // in case you want to do something when someone reacts with 👍
-              console.log(`Collected a new ${reaction.emoji.name} reaction`);
+            collector.on('collect', (reaction, user) => {
+                message.channel.send(`Collected a new ${reaction.emoji.name} reaction and ${user.tag} reacted`);
             });
       
             // fires when the time limit or the max is reached
             collector.on('end', (collected) => {
               // reactions are no longer collected
               // if the 👍 emoji is clicked the MAX_REACTIONS times
-                return message.channel.send(`The proposal gets through: ${collected.size}`);
+                  return message.channel.send(`The proposal gets through: ${collected.size}`);
             });
           } catch (error) {
-            // "handle" errors
-            // Need to get this to handle when time ends
             console.log(error);
           }
     }

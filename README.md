@@ -36,7 +36,8 @@ Majority voting based on a percentage of voters who are allowed to vote.
 
 #### Conviction
 
-Regular voting with an increase in weight of the member's vote over time. The
+Voting with an increase in weight of the member's vote over time if they keep their vote
+cast for a longer period of time. The
 increase will happen in the regular intervals based on what was specified. With 
 the multiplier being a percent. 
 
