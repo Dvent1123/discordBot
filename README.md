@@ -38,21 +38,19 @@ sets how long the poll will stay open for and the percentage is the percentage m
 
 #### Conviction
 
-Voting with an increase in weight of the member's vote over time if they keep their vote
-cast for a longer period of time. The
-increase will happen in the regular intervals based on what was specified. With 
-the multiplier being a percent. 
+Conviction voting allows the user to vote using either ['👍', '👎'] as their reaction. The user can choose to change
+there vote at any time before the poll hits the time limit; however, the longer a user casts a vote for the more weight is place on their vote. For example: This conviction vote is set to expire in 60secs with 4 intervals and a mulitiplier of 2, then the voter has the ability to cast a vote in 4 different time intervals (60secs/4 intervals). If they user cast their vote early, in the first interval, then their vote gets multiplied by 2 with every interval that passes so the vote that would have counted as 1 is actually 16 by the time the vote is over. If they recast their vote lets say, in the 3rd interval then the multiplier would only occur twice and their vote would count for less than if they had cast it early. 
 
 ```http
-  -conviction #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Intervals> <Multiplier (percent)> <Question>
+  -conviction #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Intervals> <Multiplier> <Question>
 ```
 
 #### Quadratic
 
-Quadratic voting limits the number of reactions per member with the maximum reactions per user being 5 currently. 
+Quadratic voting gives a voter a certain amount of votes to cast and how strongly a user feels about the proposal is how many votes they will cast. 
 They are allowed to pick from this set of reactions ['👍', '😀', '🤠','😗','😉']. Then tracks the number
-of reactions members have given to an active proposal
+of reactions members have given to an active proposal. The reaction limit that we have set is currently set to 5 options or less but more can be added easily. 
 
 ```http
-  -quadratic #<Guild ID/Name> @<Specified Role> <Reaction Limit> <Question>
+  -quadratic #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Reaction Limit> <Question>
 ```
