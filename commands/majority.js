@@ -23,15 +23,13 @@ module.exports = {
             return message.channel.send('You did not specify a question for your poll')
          }
         
-        // GET TOTAL NUMBER OF PEOPLE WITH ROLE TYPE AS VARIABLE ROLE
 
-        
+        // GET TOTAL NUMBER OF PEOPLE WITH ROLE TYPE AS VARIABLE ROLE
         let role = message.guild.roles.cache.get(roleID);
         message.channel.send({content: `${role.members.size} members have this role!`});
         const totalRoleMembers = role.members.size
         
         // // RETURN OR CREATE THE NUMBER OF PEOPLE THAT MAKES MAJORITY
-        
         const MAJORITY = Math.floor(totalRoleMembers * (percentage / 100))
         //Don't have to know when they take away the reaction, just update the time when they react again
         

@@ -37,6 +37,8 @@ client.on('messageCreate' , message => {
         client.commands.get('poll').execute(client, message, args)
     }else if(command === 'majority')
         client.commands.get('majority').execute(message, args)
+    else if(command === 'conviction')
+        client.commands.get('conviction').execute(message, args)
 })
 
 
