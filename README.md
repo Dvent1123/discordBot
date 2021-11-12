@@ -29,10 +29,8 @@ Votes will be limited to the specified role and in the server/guild that is ment
 
 #### Majority
 
-Majority voting has two different ways to end the voting poll, time limit as well as percentage, and limited to these reactions ['👍', '👎']. 
-The time limit (in seconds)
-sets how long the poll will stay open for and the percentage is the percentage majority needed to pass and is calculated by
-totalRoleMembers * (percentage [user-input] / 100). Once the percentage or time limit is reached then the 
+Majority voting has two different ways to end the voting poll, time limit as well as percentage, and limited to these reactions ['👍', '👎']. The time limit (in seconds)
+sets how long the poll will stay open for and the percentage is the percentage majority needed to pass and is calculated by totalRoleMembers * (percentage [user-input] / 100). Once the percentage or time limit is reached then the poll is ended. 
 
 ```http
   -majority #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Percentage> <Question>
