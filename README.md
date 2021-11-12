@@ -31,7 +31,7 @@ within a specified time limit set in seconds.
 Majority voting based on a percentage of voters who are allowed to vote.
 
 ```http
-  -majority <Guild ID/Name> <Specified Role> <Percentage> <Question>
+  -majority #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Percentage> <Question>
 ```
 
 #### Conviction
@@ -42,14 +42,15 @@ increase will happen in the regular intervals based on what was specified. With
 the multiplier being a percent. 
 
 ```http
-  -conviction <Guild ID/Name> <Specified Role> <Time Limit (secs)> <Intervals> <Multiplier (percent)> <Question>
+  -conviction #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Intervals> <Multiplier (percent)> <Question>
 ```
 
 #### Quadratic
 
-Quadratic voting limits the number of reactions per member. Then tracks the number
+Quadratic voting limits the number of reactions per member with the maximum reactions per user being 5 currently. 
+They are allowed to pick from this set of reactions ['👍', '😀', '🤠','😗','😉']. Then tracks the number
 of reactions members have given to an active proposal
 
 ```http
-  -quadratic <Guild ID/Name> <Specified Role> <Reaction Limit> <Question>
+  -quadratic #<Guild ID/Name> @<Specified Role> <Reaction Limit> <Question>
 ```
