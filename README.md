@@ -19,16 +19,17 @@ are 4 different types of voting that can be done. Voting, majority voting,
 
 #### Voting
 
-Regular voting style that counts only the reactions from a specified role 
-within a specified time limit set in seconds.
+This is regular voting rules, limited to these reactions ['👍', '👎']. The user can either
+vote with a '👍' or a '👎'. After the set time limit (in seconds) goes by a message will be sent with the results.
+Votes will be limited to the specified role and in the server/guild that is mentioned.
 
 ```http
-  -voting <Guild ID/Name> <Specified Role> <Time Limit (secs)> <Question>
+  -voting #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Question>
 ```
 
 #### Majority
 
-Majority voting based on a percentage of voters who are allowed to vote.
+Majority voting has two different ways to end the voting poll, time limit as well as percentage. 
 
 ```http
   -majority #<Guild ID/Name> @<Specified Role> <Time Limit (secs)> <Percentage> <Question>
