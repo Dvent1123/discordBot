@@ -1,5 +1,3 @@
-const Discord = require('discord.js')
-const { MessageEmbed } = require('discord.js')
 
 module.exports = {
     name: 'conviction',
@@ -25,10 +23,28 @@ module.exports = {
         const start_time_in_seconds = Math.floor(Date.now() / 1000)
         const end_time_in_seconds = start_time_in_seconds + time_limit
 
+
+        if(!question) {
+            return message.channel.send('You did not specify a question for your poll')
+        }else if(!roleID){
+            return message.channel.send('You did not specify a role for your poll')
+        }else if(!time_limit){
+            return message.channel.send('You did not specify a time limit for your poll')
+        }else if(!intervals){
+            return message.channel.send('You did not specify a number of intervals')
+        }else if(!multiplier){
+            return message.channel.send('You did not specify a multiplier for the votes')
+        }
         // Role
         let role = message.guild.roles.cache.get(roleID);
         message.channel.send({content: `Question: ${question}`});
         const totalRoleMembers = role.members.size
+
+        //puts all members in an array
+        let members_array = new Array();
+        role.members.forEach(user => {
+            members_array.push(user.user.username);
+        });
 
 
         try {
@@ -42,7 +58,7 @@ module.exports = {
 
             // set up a filter to only collect reactions from the array of valid reactions
             // and don't count the bot's reaction
-            const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot;
+            const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot && members_array.includes(user.username);
       
             // set up the collecrtor with the time_limit
             time_limit = time_limit * 1000

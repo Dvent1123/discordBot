@@ -1,6 +1,7 @@
 require('dotenv').config()
 const { Client, Intents, Collection } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, 
+    Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_PRESENCES,
     Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
     Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 
@@ -34,11 +35,13 @@ client.on('messageCreate' , message => {
     if(command === 'ping'){
         client.commands.get('ping').execute(message, args)
     }else if(command === 'poll'){
-        client.commands.get('poll').execute(client, message, args)
+        client.commands.get('poll').execute(message, args)
     }else if(command === 'majority')
         client.commands.get('majority').execute(message, args)
     else if(command === 'conviction')
         client.commands.get('conviction').execute(message, args)
+    else if(command === 'quadratic')
+        client.commands.get('quadratic').execute(message, args)
 })
 
 

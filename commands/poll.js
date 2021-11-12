@@ -1,10 +1,8 @@
-const Discord = require('discord.js')
-const { MessageEmbed } = require('discord.js')
 
 module.exports = {
     name: 'poll',
     description: 'Creates a poll',
-    execute: async (client, message, args) => {
+    execute: async (message, args) => {
         if (!message.member.permissions.has('ADMINISTRATOR'))
             return message.channel.send('You do not have Admin permission')
 
@@ -12,20 +10,34 @@ module.exports = {
         if(!channel){
             return message.channel.send('You did not mention / give a channel id or name you want to send a poll to')
         }
+
+        // -voting <Guild ID/Name> <Specified Role> <Time Limit (secs)> <Question>
         
-        let question = args.slice(1).join(' ')
+        let argsArray = args.slice()
+        const roleID = argsArray[1].slice(3, argsArray[1].length-1)
+        let time_limit = parseInt(argsArray[2])
+        const question = args.slice(3).join(' ')
 
         if(!question) {
             return message.channel.send('You did not specify a question for your poll')
+        }else if(!roleID){
+            return message.channel.send('You did not specify a role for your poll')
+        }else if(!time_limit){
+            return message.channel.send('You did not specify a time limit for your poll')
         }
 
-        const MAX_REACTIONS = 0;
+        let role = message.guild.roles.cache.get(roleID);
+        let members_array = new Array();
+        role.members.forEach(user => {
+            members_array.push(user.user.username);
+        });
       
         try {
             // send a message and wait for it to be sent
             const sentMessage = await message.channel.send('New poll:\n' + question);
 
             const valid_reactions = ['👍', '👎', '🤠'];
+            time_limit = time_limit * 1000
 
             valid_reactions.forEach(element => sentMessage.react(element));
 
@@ -36,10 +48,10 @@ module.exports = {
             for (let count = 0; count < valid_reactions.length; count++) {
                 // set up a filter to only collect reactions with the 👍 emoji
                 // and don't count the bot's reaction
-                filter = (reaction, user) => reaction.emoji.name === valid_reactions[count] && !user.bot;
+                filter = (reaction, user) => reaction.emoji.name === valid_reactions[count] && !user.bot && members_array.includes(user.username);
 
                 // set up the collecrtor with the MAX_REACTIONS
-                collector = sentMessage.createReactionCollector({ filter, time: 5000 });
+                collector = sentMessage.createReactionCollector({ filter, time: time_limit });
 
                 collector.on('collect', (reaction) => {
                     // in case you want to do something when someone reacts with 👍
