@@ -47,7 +47,7 @@ there vote at any time before the poll hits the time limit; however, the longer 
 
 #### Quadratic
 
-Quadratic voting gives a voter a certain amount of votes to cast and how strongly a user feels about the proposal is how many votes they will cast. 
+Quadratic voting gives a voter a certain amount of votes to cast and how strongly a user feels about the proposal is how many votes they will cast. In this implementation it will count the total number of reactions given vs. the total amount of reactions available. The number of votes cast will tell the admin how heavily the users feel about a proposal.
 They are allowed to pick from this set of reactions ['👍', '😀', '🤠','😗','😉']. Then tracks the number
 of reactions members have given to an active proposal. The reaction limit that we have set is currently set to 5 options or less but more can be added easily. 
 
