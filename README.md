@@ -15,6 +15,47 @@ are 4 different types of voting that can be done. Voting, majority voting,
 **Bot:** Discord.js
 
 
+# Project Title
+
+A brief description of what this project does and who it's for
+
+
+## Deployment
+
+To deploy this project run either locally or deployed.
+You must have node version 16.4 or higher to use discord.js
+
+Clone this project
+
+```bash
+  $ git clone https://github.com/Dvent1123/discordBot
+```
+
+Change directories into the project folder
+```bash
+  $ cd <Folder Path>
+```
+
+Install all Dependencies
+```bash
+  $ npm install
+```
+
+Make a dotenv (.env) file in the main folder directory
+put in this file only one variable, the variable token.
+TOKEN=<your discord developer token>
+
+In the main directory run
+```bash
+  $ node index.js
+```
+
+
+Notes: Make sure to get your token from the discord developer
+portal. You must also allow the bot full permissions to give it access
+to the users. 
+
+
 ## Commands
 
 #### Voting
