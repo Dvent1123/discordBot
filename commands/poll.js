@@ -1,6 +1,6 @@
 
 module.exports = {
-    name: 'poll',
+    name: 'voting',
     description: 'Creates a poll',
     execute: async (message, args) => {
         if (!message.member.permissions.has('ADMINISTRATOR'))
