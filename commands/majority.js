@@ -57,21 +57,24 @@ module.exports = {
 
             // set up a filter to only collect reactions from the array of valid reactions
             // and don't count the bot's reaction
-            const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot && members_array.includes(user.username);
-      
-            // set up the collecrtor with the MAX_REACTIONS
-            const collector = sentMessage.createReactionCollector({ filter, time: time_limit, max: MAJORITY });
-      
-            collector.on('collect', (reaction, user) => {
-                message.channel.send(`Collected a new ${reaction.emoji.name} reaction and ${user.tag} reacted`);
-            });
-      
-            // fires when the time limit or the max is reached
-            collector.on('end', (collected) => {
-              // reactions are no longer collected
-              // if the 👍 emoji is clicked the MAX_REACTIONS times
-                  return message.channel.send(`The proposal gets through: ${collected.size}`);
-            });
+                
+            for(let count = 0; count < valid_reactions.length; count++ {
+                const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot && members_array.includes(user.username);
+
+                // set up the collecrtor with the MAX_REACTIONS
+                const collector = sentMessage.createReactionCollector({ filter, time: time_limit, max: MAJORITY });
+
+                collector.on('collect', (reaction, user) => {
+                    console.log(`Collected a new ${reaction.emoji.name} reaction and ${user.tag} reacted`);
+                });
+
+                // fires when the time limit or the max is reached
+                collector.on('end', (collected) => {
+                  // reactions are no longer collected
+                  // if the 👍 or 👎 emoji is clicked the MAX_REACTIONS times
+                    return message.channel.send(`${valid_reactions[count]}: ${collected.size}`);
+                });
+            }
           } catch (error) {
             console.log(error);
           }
