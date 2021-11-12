@@ -17,7 +17,9 @@ module.exports = {
         const roleID = argsArray[1].slice(3, argsArray[1].length-1)
         let time_limit = parseInt(argsArray[2])
         const question = args.slice(3).join(' ')
-
+        
+        
+        // error checking for checking that question, role, and time limit parameters were sent
         if(!question) {
             return message.channel.send('You did not specify a question for your poll')
         }else if(!roleID){
@@ -33,24 +35,22 @@ module.exports = {
         });
       
         try {
-            // send a message and wait for it to be sent
+            // sends a question and wait for it to be sent
             const sentMessage = await message.channel.send('New poll:\n' + question);
 
             const valid_reactions = ['👍', '👎', '🤠'];
             time_limit = time_limit * 1000
-
+            
+            // sends reactions to message
             valid_reactions.forEach(element => sentMessage.react(element));
 
-            // react to the sent message
-
-            // await sentMessage.react('👍');
-
+            // creates a collector for each reaction
             for (let count = 0; count < valid_reactions.length; count++) {
                 // set up a filter to only collect reactions with the 👍 emoji
                 // and don't count the bot's reaction
                 filter = (reaction, user) => reaction.emoji.name === valid_reactions[count] && !user.bot && members_array.includes(user.username);
 
-                // set up the collecrtor with the MAX_REACTIONS
+                // set up the collector with the a time_limit
                 collector = sentMessage.createReactionCollector({ filter, time: time_limit });
 
                 collector.on('collect', (reaction) => {
@@ -61,8 +61,7 @@ module.exports = {
                 // fires when the time limit or the max is reached
                 collector.on('end', (collected) => {
                     // reactions are no longer collected
-                    // if the 👍 emoji is clicked the MAX_REACTIONS times
-                    return message.channel.send(`We got this many ${valid_reactions[count]}: ${collected.size}`);
+                    return message.channel.send(`${valid_reactions[count]}: ${collected.size}`);
 
                 });
             }
