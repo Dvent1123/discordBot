@@ -1,3 +1,4 @@
+const { getParams } = require('./params_middleware')
 
 module.exports = {
     name: 'voting',
@@ -6,20 +7,11 @@ module.exports = {
         if (!message.member.permissions.has('ADMINISTRATOR'))
             return message.channel.send('You do not have Admin permission')
 
-        const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
+        let { channel, roleID, time_limit, question} = getParams(message, args)
+        
         if(!channel){
             return message.channel.send('You did not mention / give a channel id or name you want to send a poll to')
         }
-
-        // -voting <Guild ID/Name> <Specified Role> <Time Limit (secs)> <Question>
-        
-        let argsArray = args.slice()
-        const roleID = argsArray[1].slice(3, argsArray[1].length-1)
-        let time_limit = parseInt(argsArray[2])
-        const question = args.slice(3).join(' ')
-        
-        
-        // error checking for checking that question, role, and time limit parameters were sent
         if(!question) {
             return message.channel.send('You did not specify a question for your poll')
         }else if(!roleID){
@@ -27,6 +19,7 @@ module.exports = {
         }else if(!time_limit){
             return message.channel.send('You did not specify a time limit for your poll')
         }
+
 
         let role = message.guild.roles.cache.get(roleID);
         let members_array = new Array();

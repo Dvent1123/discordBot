@@ -58,7 +58,7 @@ module.exports = {
             // set up a filter to only collect reactions from the array of valid reactions
             // and don't count the bot's reaction
                 
-            for(let count = 0; count < valid_reactions.length; count++ {
+            for(let count = 0; count < valid_reactions.length; count++) {
                 const filter = (reaction, user) => valid_reactions.includes(reaction.emoji.name) && !user.bot && members_array.includes(user.username);
 
                 // set up the collecrtor with the MAX_REACTIONS
