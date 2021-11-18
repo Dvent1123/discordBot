@@ -1,3 +1,4 @@
+const { getMajorityParams } = require('./params_middleware')
 
 module.exports = {
     name: 'majority',
@@ -6,18 +7,11 @@ module.exports = {
         if(!message.member.permissions.has('ADMINISTRATOR'))
         return message.channel.send('You do not have Admin permission')
 
-        const channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[0])
+        let { channel, roleID, time_limit,percentage, question} = getMajorityParams(message, args)
+
         if(!channel){
             return message.channel.send('You did not mention / give a channel id or name you want to send a poll to')
         }
-        
-        
-        let argsArray = args.slice()
-        const roleID = argsArray[1].slice(3, argsArray[1].length-1)
-        let time_limit = parseInt(argsArray[2])
-        const percentage = argsArray[3]
-        const question = args.slice(4).join(' ')
-
         if(!question) {
             return message.channel.send('You did not specify a question for your poll')
          }else if(!time_limit){
